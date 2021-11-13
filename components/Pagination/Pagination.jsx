@@ -10,8 +10,8 @@ export function setPageListMax(maxLen = 18) {
   return a;
 }
 
-export function usePagination(maxLen, currentPage) {
-  const [currentPage, setCurrentPage] = useState(currentPage || 1);
+export function usePagination(maxLen, persisCurrentPage) {
+  const [currentPage, setCurrentPage] = useState(persisCurrentPage || 1);
   const [pageList, setPageList] = useState(setPageListMax());
 
   return {
