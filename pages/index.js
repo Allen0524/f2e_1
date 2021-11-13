@@ -1,82 +1,153 @@
-import Head from 'next/head'
+import Head from "next/head";
+import Link from "next/link";
+import axios from "axios";
+import SmallCard from "../components/SmallCard/SmallCard";
+import { getAuthorizationHeader } from "../api";
+import { FireIcon, BeakerIcon, SparklesIcon } from "@heroicons/react/solid";
+import Layout from "../components/Layout";
 
-export default function Home() {
+export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>TaiFun旅遊網</title>
+        <link rel="icon" href="/taiwan.png" />
       </Head>
-
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+      <Layout>
+        <main className="max-w-7xl mx-auto px-8 sm:px-16 bg-slightBlue">
+          <section className="pt-6">
+            <div className="relative flex justify-center items-center pb-5 text-pri">
+              <h2 className="text-4xl font-semibold text-center pr-2">
+                熱門景點
+              </h2>
+              <FireIcon className="h-8" />
+            </div>
+            <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
+              {DesDatas.map((data) => {
+                return (
+                  <SmallCard
+                    key={data.ID}
+                    id={data.ID}
+                    name={data.Name}
+                    picture={data.Picture.PictureUrl1}
+                    opentime={data.OpenTime}
+                    category="popularDestination"
+                  />
+                );
+              })}
+            </div>
+            <div className="flex justify-center mt-10">
+              <Link href="/popularDestination">
+                <a>
+                  <button
+                    aria-label="View More Popular Destination"
+                    className="border-2 border-pri rounded-lg py-3 px-7 text-pri font-semibold mb-7"
+                  >
+                    看更多熱門景點
+                  </button>
+                </a>
+              </Link>
+            </div>
+          </section>
+          <section className="pt-6">
+            <div className="relative flex justify-center items-center pb-5 text-pri">
+              <h2 className="text-4xl font-semibold text-center pr-2">
+                熱門美食
+              </h2>
+              <BeakerIcon className="h-8" />
+            </div>
+            <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
+              {FoodDatas.map((data) => (
+                <SmallCard
+                  key={data.ID}
+                  id={data.ID}
+                  name={data.Name}
+                  picture={data.Picture.PictureUrl1}
+                  opentime={data.OpenTime}
+                  category="popularFood"
+                />
+              ))}
+            </div>
+            <div className="flex justify-center mt-10">
+              <Link href="/popularFood">
+                <a>
+                  <button
+                    aria-label="View More Popular Food"
+                    className=" border-2 border-pri rounded-lg py-3 px-7 text-pri font-semibold mb-7"
+                  >
+                    看更多熱門美食
+                  </button>
+                </a>
+              </Link>
+            </div>
+          </section>
+          <section className="pt-6">
+            <div className="relative flex justify-center items-center pb-5 text-pri">
+              <h2 className="text-4xl font-semibold text-center pr-2">
+                近期活動
+              </h2>
+              <SparklesIcon className="h-9" />
+            </div>
+            <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
+              {ActivityDatas.map((data) => (
+                <SmallCard
+                  key={data.ID}
+                  id={data.ID}
+                  name={data.Name}
+                  picture={data.Picture.PictureUrl1}
+                  opentime={data.OpenTime}
+                  category="recentActivity"
+                />
+              ))}
+            </div>
+            <div className="flex justify-center mt-10">
+              <Link href="/recentActivity">
+                <a>
+                  <button
+                    aria-label="View More Recent Activities"
+                    className=" border-2 border-pri rounded-lg py-3 px-7 text-pri font-semibold mb-7"
+                  >
+                    看更多近期活動
+                  </button>
+                </a>
+              </Link>
+            </div>
+          </section>
+        </main>
+      </Layout>
     </div>
-  )
+  );
+}
+
+export async function getStaticProps() {
+  const p1 = axios.get(
+    "https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=8&$format=JSON",
+    {
+      headers: getAuthorizationHeader(),
+    }
+  );
+  const p2 = axios.get(
+    "https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant?$top=8&$format=JSON",
+    {
+      headers: getAuthorizationHeader(),
+    }
+  );
+  const p3 = axios.get(
+    "https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity?$top=8&$format=JSON",
+    {
+      headers: getAuthorizationHeader(),
+    }
+  );
+  const res = await Promise.all([p1, p2, p3]);
+  const DesDatas = res[0].data;
+  const FoodDatas = res[1].data;
+  const ActivityDatas = res[2].data;
+
+  return {
+    props: {
+      DesDatas,
+      FoodDatas,
+      ActivityDatas,
+    },
+  };
 }
