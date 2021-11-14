@@ -3,6 +3,9 @@ import { useRef } from "react";
 const Content = ({ images, activeIndex }) => {
   const imgRef = useRef();
   function onError() {
+    imgRef.current.style.objectFit = "contain";
+    imgRef.current.style.height = "200px";
+    imgRef.current.style.width = "200px";
     imgRef.current.src = "/not-found.png";
   }
   return (
@@ -11,7 +14,7 @@ const Content = ({ images, activeIndex }) => {
         return (
           <div
             key={index}
-            className=" relative w-[800px] h-[549px] rounded-xl"
+            className="relative w-[800px] h-[549px] rounded-xl"
             style={
               obj.notFound
                 ? {
@@ -20,13 +23,17 @@ const Content = ({ images, activeIndex }) => {
                     alignItems: "center",
                   }
                 : index === activeIndex
-                ? { display: "inline-block" }
+                ? {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }
                 : { display: "none" }
             }
           >
             <img
               ref={imgRef}
-              src={obj.url}
+              src={obj.url || "/not-found.png"}
               alt=""
               className="absolute w-full h-full object-cover"
               style={

@@ -1,17 +1,26 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import useClickOutside from "../../hooks/useClickOutside";
 
-const Dropdown = ({ datas, defaultValue }) => {
+const Dropdown = ({ datas, defaultValue, dispatch }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
   const ref = useRef();
-  useClickOutside(ref, null, () => setShowMenu(false));
+  const inputValue = useRef();
+  useClickOutside(ref, null, () => {
+    setShowMenu(false);
+    // if (typeof dispatch === "function") {
+    //   dispatch({ type: "reset" });
+    // }
+  });
 
   function handleOnMenuClick(e) {
     if (e.target.id && e.target.id !== "") {
-      setSelectedValue(e.target.id);
+      dispatch({
+        type: defaultValue,
+        payload: e.target.id,
+      });
       setShowMenu((old) => !old);
+      inputValue.current.innerHTML = e.target.innerHTML;
     } else {
       setShowMenu((old) => !old);
     }
@@ -23,8 +32,8 @@ const Dropdown = ({ datas, defaultValue }) => {
       onClick={handleOnMenuClick}
       ref={ref}
     >
-      <div className="font-semibold text-sm pl-2">
-        {selectedValue || defaultValue}
+      <div ref={inputValue} className="font-semibold text-sm pl-2">
+        {defaultValue}
       </div>
       {showMenu ? (
         <ChevronUpIcon className=" h-5 pr-2" />
@@ -46,7 +55,7 @@ const Dropdown = ({ datas, defaultValue }) => {
         {datas.map((data) => (
           <div
             key={data.id}
-            id={data.id}
+            id={data.value}
             className="border-b-2 text-center py-3 text-sm font-semibold cursor-pointer hover:bg-gray-100"
           >
             {data.id}

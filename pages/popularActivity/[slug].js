@@ -25,7 +25,6 @@ function verify(obj) {
 
 export default function PageInfo({ data }) {
   const Map = dynamic(() => import("../../components/Map"), { ssr: false });
-  console.log(data);
 
   return (
     <>

@@ -8,8 +8,15 @@ import Dropdown from "../Dropdown";
 import Filter from "../Filter";
 import datas from "../../constant/location";
 import CATEGORY_DATA from "../../constant/category";
+import SmallFilter from "../Filter/smallFilter";
 
-const Header = memo(({ subTitle = "景點、美食、活動" }) => {
+const d = [
+  { id: "熱門景點", src: "/bannerScen.png" },
+  { id: "熱門美食", src: "/bannerRes.png" },
+  { id: "近期活動", src: "/bannerAct.png" },
+];
+
+const Header = memo(({ subTitle = "景點、美食、活動", mainTitle = "台灣" }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [showSuspension, setShowSuspension] = useState(false);
   const backDropRef = useRef();
@@ -42,10 +49,17 @@ const Header = memo(({ subTitle = "景點、美食、活動" }) => {
     }
   }, [match, setShowFilter]);
 
+  const src = d.find((item) => item.id === subTitle)?.src;
+
   return (
     <>
       <div className="relative h-[311px] sm:h-[400px] lg:h-[500px] xl:h-[600px] 2xl:h-[700px]">
-        <Image layout="fill" objectFit="cover" src="/banner.png" />
+        <Image
+          layout="fill"
+          objectFit="cover"
+          src={src || "/banner.png"}
+          priority
+        />
         <div className="absolute top-[10px] left-[27px] right-[27px] flex flex-col text-white md:top-[60px] xl:top-[80px] 2xl:top-[100px]">
           <Link href="/">
             <div className="flex mb-[25px] cursor-pointer items-center">
@@ -56,7 +70,7 @@ const Header = memo(({ subTitle = "景點、美食、活動" }) => {
             </div>
           </Link>
           <div className="flex flex-col items-center mb-7">
-            <h3 className="text-4xl font-semibold">尋找台灣</h3>
+            <h3 className="text-4xl font-semibold">尋找{mainTitle}</h3>
             <h4 className="text-3xl font-semibold pt-4">{subTitle}</h4>
           </div>
 
@@ -93,7 +107,7 @@ const Header = memo(({ subTitle = "景點、美食、活動" }) => {
                       className="absolute top-[90px] right-0 z-10 w-[700px] h-[400px] shadow-lg bg-gray-100 rounded-xl text-black opacity-0 transition-all"
                       style={showSuspension ? { opacity: 1 } : null}
                     >
-                      <Filter />
+                      <Filter setShowSuspension={setShowSuspension} />
                     </div>
                   </>
                 ) : null}
@@ -113,38 +127,25 @@ const Header = memo(({ subTitle = "景點、美食、活動" }) => {
           </div>
         </div>
       </div>
-      <div
-        className={
-          showFilter
-            ? "fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm z-20 translate-y-0 transition-transform"
-            : "fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm z-20 translate-y-full transition-transform"
-        }
-      >
-        <div className="absolute top-[8%] w-full z-20 flex justify-center">
-          <div className="h-1 w-20 bg-white rounded-sm" />
-        </div>
+      {showFilter ? (
         <div
-          ref={backDropRef}
-          className="absolute bottom-0 left-0 right-0 h-[90%] z-20 bg-gray-100 rounded-xl"
+          className={
+            showFilter
+              ? "fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm z-20 translate-y-0 transition-transform"
+              : "fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm z-20 translate-y-full transition-transform"
+          }
         >
-          <div className="flex flex-col justify-start items-center w-full h-full mt-5">
-            <div className="flex flex-col items-start mb-5">
-              <div className="mb-2 px-1">分類</div>
-              <Dropdown datas={CATEGORY_DATA} defaultValue="分類" />
-            </div>
-
-            {datas.map((data) => (
-              <div key={data.id} className="flex flex-col items-start mb-5">
-                <div className="mb-2 px-1">{data.id}</div>
-                <Dropdown datas={data.datas} defaultValue="選擇縣市" />
-              </div>
-            ))}
-            <button className="bg-pri rounded-3xl p-3 w-32 text-white">
-              搜尋
-            </button>
+          <div className="absolute top-[8%] w-full z-20 flex justify-center">
+            <div className="h-1 w-20 bg-white rounded-sm" />
+          </div>
+          <div
+            ref={backDropRef}
+            className="absolute bottom-0 left-0 right-0 h-[90%] z-20 bg-gray-100 rounded-xl"
+          >
+            <SmallFilter setShowFilter={setShowFilter} />
           </div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 });

@@ -29,15 +29,16 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
                     key={data.ID}
                     id={data.ID}
                     name={data.Name}
+                    address={data.Address}
                     picture={data.Picture.PictureUrl1}
                     opentime={data.OpenTime}
-                    category="popularDestination"
+                    category="popularScenicSpot"
                   />
                 );
               })}
             </div>
             <div className="flex justify-center mt-10">
-              <Link href="/popularDestination">
+              <Link href="/popularScenicSpot">
                 <a>
                   <button
                     aria-label="View More Popular Destination"
@@ -62,14 +63,15 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
                   key={data.ID}
                   id={data.ID}
                   name={data.Name}
+                  address={data.Address}
                   picture={data.Picture.PictureUrl1}
                   opentime={data.OpenTime}
-                  category="popularFood"
+                  category="popularRestaurant"
                 />
               ))}
             </div>
             <div className="flex justify-center mt-10">
-              <Link href="/popularFood">
+              <Link href="/popularRestaurant">
                 <a>
                   <button
                     aria-label="View More Popular Food"
@@ -94,14 +96,15 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
                   key={data.ID}
                   id={data.ID}
                   name={data.Name}
+                  address={data.Address}
                   picture={data.Picture.PictureUrl1}
                   opentime={data.OpenTime}
-                  category="recentActivity"
+                  category="popularActivity"
                 />
               ))}
             </div>
             <div className="flex justify-center mt-10">
-              <Link href="/recentActivity">
+              <Link href="/popularActivity">
                 <a>
                   <button
                     aria-label="View More Recent Activities"

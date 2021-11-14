@@ -73,7 +73,7 @@ const PopularFood = () => {
                 name={data.Name}
                 picture={data.Picture.PictureUrl1}
                 opentime={data.OpenTime}
-                category="popularFood"
+                category="popularRestaurant"
               />
             ))}
           </div>
