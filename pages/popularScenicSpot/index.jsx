@@ -10,6 +10,7 @@ import { fetchNextPage } from "../../lib";
 import { getAuthorizationHeader } from "../../api";
 import { Pagination, usePagination } from "../../components/Pagination";
 import { setPageListMax } from "../../components/Pagination/Pagination";
+import Footer from "../../components/Footer";
 
 let persistentCurrentPage = null;
 let persistentMaxPage = null;
@@ -86,6 +87,7 @@ const PopularDestination = () => {
           max={max} // 總數／３
         />
       </main>
+      <Footer />
     </div>
   );
 };

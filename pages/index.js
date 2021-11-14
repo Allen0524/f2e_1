@@ -5,6 +5,7 @@ import SmallCard from "../components/SmallCard/SmallCard";
 import { getAuthorizationHeader } from "../api";
 import { FireIcon, BeakerIcon, SparklesIcon } from "@heroicons/react/solid";
 import Layout from "../components/Layout";
+import Footer from "../components/Footer";
 
 export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
   return (
@@ -117,6 +118,7 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
             </div>
           </section>
         </main>
+        <Footer />
       </Layout>
     </div>
   );

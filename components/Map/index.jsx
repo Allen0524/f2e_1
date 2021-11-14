@@ -1,7 +1,7 @@
 import React from "react";
 import "leaflet/dist/leaflet.css";
 
-import L, { map } from "leaflet";
+import L from "leaflet";
 
 const Map = ({ pos, lon }) => {
   React.useEffect(() => {
@@ -28,7 +28,7 @@ const Map = ({ pos, lon }) => {
       map.remove();
     };
   }, []);
-  return <div id="map" className=" h-96 w-2/3"></div>;
+  return <div id="map" className="h-96 w-[100%] lg:w-2/3"></div>;
 };
 
 export default Map;

@@ -6,6 +6,7 @@ import { PhoneIcon, MapIcon, BeakerIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { getAuthorizationHeader } from "../../api";
 import Carosule from "../../components/Carosule/Carosule";
+import Footer from "../../components/Footer";
 
 function verify(obj) {
   const images = [];
@@ -38,7 +39,7 @@ export default function PageInfo({ data }) {
           <div className="border-2 inline-block p-2 bg-pri text-white mb-4">
             {data.Class || data.Class1 || data.Class2 || data.Class3}
           </div>
-          <div className="flex h-[550px]">
+          <div className="flex flex-col h-[800px] lg:h-[550px] lg:flex-row">
             <Carosule images={verify(data?.Picture)} />
             <div className="w-[200px] md:w-[300px] ml-3">
               <div className="flex flex-col">
@@ -103,6 +104,7 @@ export default function PageInfo({ data }) {
             </div>
           </section>
         </main>
+        <Footer />
       </SmallLayout>
     </>
   );

@@ -9,6 +9,7 @@ import { Pagination, usePagination } from "../../components/Pagination";
 import { setPageListMax } from "../../components/Pagination/Pagination";
 import { fetchNextPage } from "../../lib";
 import { getAuthorizationHeader } from "../../api";
+import Footer from "../../components/Footer";
 
 let persistentCurrentPage = null;
 let persistentMaxPage = null;
@@ -85,6 +86,7 @@ const PopularFood = () => {
           max={18} // 總數／３
         />
       </main>
+      <Footer />
     </div>
   );
 };

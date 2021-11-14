@@ -18,7 +18,7 @@ const Carosule = ({ images }) => {
     setActiveIndex((pre) => index);
   };
   return (
-    <div className="relative w-[800px] h-[549px] overflow-hidden rounded-xl">
+    <div className="relative w-full lg:w-[800px] h-[549px] overflow-hidden rounded-xl">
       <Content activeIndex={activeIndex} images={images} />
       <Arrows prevIndex={handlePrevIndex} nextIndex={handleNextIndex} />
       <Dots
