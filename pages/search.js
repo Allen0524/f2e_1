@@ -66,12 +66,15 @@ const Search = () => {
 
   return (
     <div>
-      <Header subTitle={transformCategory.id} mainTitle={citys} />
+      <Header
+        subTitle={transformCategory?.id || "景點、美食、活動"}
+        mainTitle={citys}
+      />
       <main className="max-w-7xl mx-auto px-8 sm:px-16 bg-slightBlue">
         <section className="pt-6 mb-10">
           <div className="relative flex justify-center items-center pb-5 text-pri">
             <h2 className="text-4xl font-semibold text-center pr-2">
-              {transformCategory.id}
+              {transformCategory?.id || ""}
             </h2>
             <FireIcon className="h-8" />
           </div>
