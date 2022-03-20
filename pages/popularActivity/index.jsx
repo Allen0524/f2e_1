@@ -1,54 +1,54 @@
-import React from "react";
-import Head from "next/head";
-import Header from "../../components/Header/Header";
-import SmallCard from "../../components/SmallCard/SmallCard";
-import { SparklesIcon } from "@heroicons/react/solid";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { Pagination, usePagination } from "../../components/Pagination";
-import { setPageListMax } from "../../components/Pagination/Pagination";
-import { fetchNextPage } from "../../lib";
-import { getAuthorizationHeader } from "../../api";
-import Footer from "../../components/Footer";
+import React from 'react'
+import Head from 'next/head'
+import Header from '../../components/Header/Header'
+import SmallCard from '../../components/SmallCard/SmallCard'
+import {SparklesIcon} from '@heroicons/react/solid'
+import axios from 'axios'
+import {useQuery} from 'react-query'
+import {Pagination, usePagination} from '../../components/Pagination'
+import {setPageListMax} from '../../components/Pagination/Pagination'
+import {fetchNextPage} from '../../lib'
+import {getAuthorizationHeader} from '../../api'
+import Footer from '../../components/Footer'
 
-let persistentCurrentPage = null;
-let persistentMaxPage = null;
+let persistentCurrentPage = null
+let persistentMaxPage = null
 
 const RecentActivity = () => {
-  const [max, setMax] = React.useState(persistentMaxPage || 18);
-  const { currentPage, setCurrentPage, pageList, setPageList } = usePagination(
+  const [max, setMax] = React.useState(persistentMaxPage || 18)
+  const {currentPage, setCurrentPage, pageList, setPageList} = usePagination(
     max,
-    persistentCurrentPage
-  );
-  const { isLoading, isError, error, data, isFetching, isPreviousData } =
+    persistentCurrentPage,
+  )
+  const {isLoading, isError, error, data, isFetching, isPreviousData} =
     useQuery(
       [`pagination`, currentPage],
-      () => fetchNextPage(currentPage, "Activity"),
+      () => fetchNextPage(currentPage, 'Activity'),
       {
         keepPreviousData: true,
-      }
-    );
+      },
+    )
 
   React.useEffect(() => {
-    persistentCurrentPage = currentPage;
-  }, [currentPage]);
+    persistentCurrentPage = currentPage
+  }, [currentPage])
 
   React.useEffect(() => {
     async function getMax() {
       const res = await axios.get(
-        "https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity?$format=JSON",
-        { headers: getAuthorizationHeader() }
-      );
-      const max = res.data.length;
-      setMax(max);
-      setPageList(setPageListMax(max));
-      persistentMaxPage = max;
+        'https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity?$format=JSON',
+        {headers: getAuthorizationHeader()},
+      )
+      const max = res.data.length
+      setMax(max)
+      setPageList(setPageListMax(max))
+      persistentMaxPage = max
     }
 
     if (!persistentMaxPage) {
-      getMax();
+      getMax()
     }
-  }, []);
+  }, [])
 
   return (
     <div>
@@ -66,12 +66,12 @@ const RecentActivity = () => {
             <SparklesIcon className="h-8" />
           </div>
           <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {data?.map((data) => (
+            {data?.map(data => (
               <SmallCard
-                key={data.ID}
-                id={data.ID}
+                key={data.ActivityID}
+                id={data.ActivityID}
                 address={data.Address}
-                name={data.Name}
+                name={data.ActivityName}
                 picture={data.Picture.PictureUrl1}
                 opentime={data.OpenTime}
                 category="popularActivity"
@@ -88,7 +88,7 @@ const RecentActivity = () => {
       </main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default RecentActivity;
+export default RecentActivity

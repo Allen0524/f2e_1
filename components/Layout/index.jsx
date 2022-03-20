@@ -15,7 +15,6 @@ const Layout = ({children}) => {
   return (
     <div>
       <Header />
-      ``
       {children}
       {iseFetching ? <LoadingIndicator /> : null}
     </div>

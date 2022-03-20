@@ -1,31 +1,31 @@
-import React from "react";
-import Head from "next/head";
-import dynamic from "next/dynamic";
-import SmallLayout from "../../components/Layout/SmallLayout";
-import { PhoneIcon, MapIcon, BeakerIcon } from "@heroicons/react/solid";
-import axios from "axios";
-import { getAuthorizationHeader } from "../../api";
-import Carosule from "../../components/Carosule/Carosule";
-import Footer from "../../components/Footer";
+import React from 'react'
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
+import SmallLayout from '../../components/Layout/SmallLayout'
+import {PhoneIcon, MapIcon, BeakerIcon} from '@heroicons/react/solid'
+import axios from 'axios'
+import {getAuthorizationHeader} from '../../api'
+import Carosule from '../../components/Carosule/Carosule'
+import Footer from '../../components/Footer'
 
 function verify(obj) {
-  const images = [];
+  const images = []
   for (const [key, value] of Object.entries(obj)) {
-    if (key && key.includes("PictureUrl")) {
-      images.push({ url: value, notFound: false });
+    if (key && key.includes('PictureUrl')) {
+      images.push({url: value, notFound: false})
     }
   }
 
   if (images.length === 0) {
-    images.push({ url: "/not-found.png", notFound: true });
-    return images;
+    images.push({url: '/not-found.png', notFound: true})
+    return images
   } else {
-    return images;
+    return images
   }
 }
 
-export default function PageInfo({ data }) {
-  const Map = dynamic(() => import("../../components/Map"), { ssr: false });
+export default function PageInfo({data}) {
+  const Map = dynamic(() => import('../../components/Map'), {ssr: false})
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function PageInfo({ data }) {
       </Head>
       <SmallLayout>
         <main className="max-w-7xl mx-auto px-8 sm:px-16">
-          <h1 className="font-semibold text-2xl mb-3">{data.Name}</h1>
+          <h1 className="font-semibold text-2xl mb-3">{data.ScenicSpotName}</h1>
           <div className="border-2 inline-block p-2 bg-pri text-white mb-4">
             {data.Class || data.Class1 || data.Class2 || data.Class3}
           </div>
@@ -51,7 +51,7 @@ export default function PageInfo({ data }) {
                     電話：
                   </h3>
                   <div className="flex items-center">
-                    <div>{data.Phone || "--"}</div>
+                    <div>{data.Phone || '--'}</div>
                     {/* <div>圖</div> */}
                     <PhoneIcon className="h-9 bg-pri text-white p-2 rounded-md ml-6 cursor-pointer" />
                     {/* <LocalPhoneOutlinedIcon className="h-9 bg-pri text-white p-2 rounded-md ml-6" /> */}
@@ -71,7 +71,7 @@ export default function PageInfo({ data }) {
                 <div className="font-semibold text-lg whitespace-nowrap">
                   開放時間：
                 </div>
-                <div className="min-h-[55px]">{data.OpenTime || "--"}</div>
+                <div className="min-h-[55px]">{data.OpenTime || '--'}</div>
               </div>
             </div>
           </div>
@@ -107,21 +107,21 @@ export default function PageInfo({ data }) {
         <Footer />
       </SmallLayout>
     </>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
-  const { params } = context;
+  const {params} = context
 
   const res = await axios.get(
-    `https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$filter=contains(ID, '${params.slug}')&$format=JSON`,
-    { headers: getAuthorizationHeader() }
-  );
-  const data = await res.data[0];
+    `https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$filter=contains(ScenicSpotID, '${params.slug}')&$format=JSON`,
+    {headers: getAuthorizationHeader()},
+  )
+  const data = await res.data[0]
 
   return {
     props: {
       data,
     },
-  };
+  }
 }

@@ -1,13 +1,13 @@
-import Head from "next/head";
-import Link from "next/link";
-import axios from "axios";
-import SmallCard from "../components/SmallCard/SmallCard";
-import { getAuthorizationHeader } from "../api";
-import { FireIcon, BeakerIcon, SparklesIcon } from "@heroicons/react/solid";
-import Layout from "../components/Layout";
-import Footer from "../components/Footer";
+import Head from 'next/head'
+import Link from 'next/link'
+import axios from 'axios'
+import SmallCard from '../components/SmallCard/SmallCard'
+import {getAuthorizationHeader} from '../api'
+import {FireIcon, BeakerIcon, SparklesIcon} from '@heroicons/react/solid'
+import Layout from '../components/Layout'
+import Footer from '../components/Footer'
 
-export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
+export default function Home({DesDatas, FoodDatas, ActivityDatas}) {
   return (
     <div className="">
       <Head>
@@ -24,18 +24,18 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
               <FireIcon className="h-8" />
             </div>
             <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
-              {DesDatas.map((data) => {
+              {DesDatas.map(data => {
                 return (
                   <SmallCard
-                    key={data.ID}
-                    id={data.ID}
-                    name={data.Name}
+                    key={data.ScenicSpotID}
+                    id={data.ScenicSpotID}
+                    name={data.ScenicSpotName}
                     address={data.Address}
                     picture={data.Picture.PictureUrl1}
                     opentime={data.OpenTime}
                     category="popularScenicSpot"
                   />
-                );
+                )
               })}
             </div>
             <div className="flex justify-center mt-10">
@@ -59,11 +59,11 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
               <BeakerIcon className="h-8" />
             </div>
             <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
-              {FoodDatas.map((data) => (
+              {FoodDatas.map(data => (
                 <SmallCard
-                  key={data.ID}
-                  id={data.ID}
-                  name={data.Name}
+                  key={data.RestaurantID}
+                  id={data.RestaurantID}
+                  name={data.RestaurantName}
                   address={data.Address}
                   picture={data.Picture.PictureUrl1}
                   opentime={data.OpenTime}
@@ -92,11 +92,11 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
               <SparklesIcon className="h-9" />
             </div>
             <div className="grid grid-cols-1 gap-y-5 gap-x-8 place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:flex flex-wrap justify-center">
-              {ActivityDatas.map((data) => (
+              {ActivityDatas.map(data => (
                 <SmallCard
-                  key={data.ID}
-                  id={data.ID}
-                  name={data.Name}
+                  key={data.ActivityID}
+                  id={data.ActivityID}
+                  name={data.ActivityName}
                   address={data.Address}
                   picture={data.Picture.PictureUrl1}
                   opentime={data.OpenTime}
@@ -121,32 +121,32 @@ export default function Home({ DesDatas, FoodDatas, ActivityDatas }) {
         <Footer />
       </Layout>
     </div>
-  );
+  )
 }
 
 export async function getStaticProps() {
   const p1 = axios.get(
-    "https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=8&$format=JSON",
+    'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=8&$format=JSON',
     {
       headers: getAuthorizationHeader(),
-    }
-  );
+    },
+  )
   const p2 = axios.get(
-    "https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant?$top=8&$format=JSON",
+    'https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant?$top=8&$format=JSON',
     {
       headers: getAuthorizationHeader(),
-    }
-  );
+    },
+  )
   const p3 = axios.get(
-    "https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity?$top=8&$format=JSON",
+    'https://ptx.transportdata.tw/MOTC/v2/Tourism/Activity?$top=8&$format=JSON',
     {
       headers: getAuthorizationHeader(),
-    }
-  );
-  const res = await Promise.all([p1, p2, p3]);
-  const DesDatas = res[0].data;
-  const FoodDatas = res[1].data;
-  const ActivityDatas = res[2].data;
+    },
+  )
+  const res = await Promise.all([p1, p2, p3])
+  const DesDatas = res[0].data
+  const FoodDatas = res[1].data
+  const ActivityDatas = res[2].data
 
   return {
     props: {
@@ -154,5 +154,5 @@ export async function getStaticProps() {
       FoodDatas,
       ActivityDatas,
     },
-  };
+  }
 }
